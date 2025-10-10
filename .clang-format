@@ -1,0 +1,34 @@
+# Inspired by WebKit, refined by me :^)
+# For clang-format 14.0
+
+IndentWidth: 4
+ColumnLimit: 120
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: true
+  BeforeCatch: false
+  SplitEmptyFunction: false
+
+SeparateDefinitionBlocks: Always
+
+# Branching-related
+AllowShortIfStatementsOnASingleLine: Never
+
+# Function-related
+AllowShortFunctionsOnASingleLine: InlineOnly
+AlignAfterOpenBracket: Align
+
+# Modifiers-related (e.g., `public`, `private`)
+EmptyLineBeforeAccessModifier: Always
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+PointerAlignment: Right
