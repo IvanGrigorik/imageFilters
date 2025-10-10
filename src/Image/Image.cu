@@ -1,4 +1,5 @@
 // Local includes
+#include "helper.cuh"
 #include "image/Image.cuh"
 #include "image/ImageCuda.cuh"
 
@@ -8,6 +9,8 @@
 #include <iostream>
 #include <random>
 #include <utility>
+
+// CUDA includes
 
 namespace render {
 using namespace std;
@@ -23,6 +26,11 @@ ImageBase::~ImageBase() {
 // returns: pair image `width` and `heigh` in the ```std::pair<int, int>```
 std::pair<int, int> ImageBase::get_size() const {
     return {this->width, this->height};
+}
+
+// Return grid size with assumption that block size is 16x16
+dim3 ImageBase::get_grid_size(dim3 block_size) const {
+    return dim3((width + block_size.x - 1) / block_size.x, (height + block_size.y - 1) / block_size.y);
 }
 
 pixel::RGB ImageBase::get_pixel(int x, int y) {
@@ -114,67 +122,72 @@ void ImageBase::freeGPUMemory() {
     }
 }
 
-/* Basic functions to work with image */
-// Fill entire image with solid color (using 1D GPU memory)
-void ImageBase::fill(const pixel::RGB &color) {
-    if (!height || !width) {
-        throw std::runtime_error("Cannot fill image with zero dimensions");
-    }
-
-    copyToGPU();
-
-    dim3 block_size(16, 16);
-    dim3 grid_size = get_grid_size(block_size);
-    fill_image_plain<<<grid_size, block_size>>>(this->get_device_view(), color);
-    cudaDeviceSynchronize();
-
-    copyFromGPU();
-}
-
-// // Return grid size with assumption that block size is 16x16
-dim3 ImageBase::get_grid_size(dim3 block_size) const {
-    return dim3((width + block_size.x - 1) / block_size.x, (height + block_size.y - 1) / block_size.y);
-}
-
-void ImageBase::random_fill() {
-    if (!height || !width) {
-        throw std::runtime_error("Cannot fill image with zero dimensions");
-    }
-
-    copyToGPU();
-    dim3 block_size(16, 16);
-    dim3 grid_size = get_grid_size(block_size);
-    std::random_device rd;
-    unsigned long long seed = static_cast<unsigned long long>(rd()) << 32 | rd();
-    fill_image_random<<<grid_size, block_size>>>(this->get_device_view(), seed);
-    cudaDeviceSynchronize();
-
-    copyFromGPU();
-}
-
-void ImageBase::gradient_fill() {
-    if (!height || !width) {
-        throw std::runtime_error("Cannot fill image with zero dimensions");
-    }
-
-    copyToGPU();
-    dim3 block_size(16, 16);
-    dim3 grid_size = get_grid_size(block_size);
-    fill_image_gradient<<<grid_size, block_size>>>(this->get_device_view());
-    cudaDeviceSynchronize();
-
-    copyFromGPU();
-}
-
 /*** ImagePPM class functions ***/
+ImagePPM::ImagePPM(fs::path imagePath) {
+    // load PPM image structure
+    std::ifstream imageFile(imagePath, std::ios::binary);
 
-ImagePPM::ImagePPM(int height, int width) : ImageBase(height, width) {
-    // Image constructor
+    if (!imageFile.is_open()) {
+        std::cerr << "Failed to open file: " << imagePath << "\n";
+        return;
+    }
+    std::string magic;
+    imageFile >> magic;
+    if (magic != "P6") {
+        std::cerr << "Unsupported PPM format: " << magic << "\n";
+        return;
+    }
+
+    // Skip comments if any (# ...)
+    imageFile >> std::ws;
+    while (imageFile.peek() == '#') {
+        std::string comment;
+        std::getline(imageFile, comment);
+        imageFile >> std::ws;
+    }
+
+    int max_px;
+    imageFile >> width >> height >> max_px;
+    // skip the newline after header
+    imageFile.ignore(1);
+    if (width <= 0 || height <= 0) {
+        std::cerr << "Invalid image dimensions\n";
+        return;
+    }
+    host_content.reserve(height * width);
+    int r, g, b;
+    while (imageFile >> r >> g >> b) {
+        host_content.emplace_back(r, g, b);
+    }
+    imageFile.close();
     size_t data_size = height * width * sizeof(pixel::RGB);
-    host_content = vector<pixel::RGB>(height * width, {0, 0, 0});
     CUDA_CHECK(cudaMalloc((pixel::RGB **)&device_content, data_size));
     CUDA_CHECK(cudaMemcpy(device_content, host_content.data(), host_content.size() * sizeof(pixel::RGB),
                           cudaMemcpyHostToDevice));
 }
 
-} // namespace image
+void ImagePPM::boxBlur(int boxSize) {
+    if (!height || !width) {
+        throw std::runtime_error("Cannot fill image with zero dimensions");
+    }
+
+    copyToGPU();
+    dim3 block_size(16, 16);
+    dim3 grid_size = get_grid_size(block_size);
+
+    float weight = 1.0 / float(boxSize * boxSize);
+    // Device integral image for fast box sum
+    float *d_integral;
+
+    
+
+
+    // Hi Blur!
+    box_blur_kernel<<<grid_size, block_size>>>(this->get_device_view());
+
+    cudaDeviceSynchronize();
+
+    copyFromGPU();
+}
+
+} // namespace render

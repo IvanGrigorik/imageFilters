@@ -76,4 +76,5 @@ __host__ __device__ inline RGB operator*(const RGB &p, const RGB &t) {
     };
 }
 
+
 } // namespace pixel

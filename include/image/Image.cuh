@@ -20,7 +20,6 @@
 // Local dependencies
 #include "Pixel.cuh"
 #include "View.cuh"
-#include "helper.cuh"
 
 // Namespace for different images
 namespace cam {
@@ -51,7 +50,7 @@ protected:
 
 public:
     // Constructors (no need to init them) and destructor
-    ImageBase(int h, int w) : height(h), width(w){};
+    ImageBase() = default;
     virtual ~ImageBase() = 0;
 
 public:
@@ -67,21 +66,15 @@ public:
 
     // Special getter that binds GPU memory and device_view
     View get_device_view() const { return View{device_content, width, height}; }
-
-    // Mics
-    void fill(const pixel::RGB &color);
-    void random_fill();
-    void gradient_fill();
 };
 
 // PPM image format
 class ImagePPM : public ImageBase {
-    friend class cam::Camera;
-
 public:
     // No any special fields for now
-    ImagePPM(int height = 720, int width = 1280);
-    void save(fs::path path) override;
+    ImagePPM(fs::path imagePath);
+    void save(fs::path path);
+    void boxBlur(int boxSize);
 };
 
 } // namespace render
