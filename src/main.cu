@@ -10,7 +10,7 @@ using namespace std;
 // parses main function arguments
 pair<fs::path, int> parse_args(int argc, char *argv[]) {
     if (argc < 3) {
-        std::cerr << "Usage: " << argv[0] << " <image_path>\n";
+        std::cerr << "Usage: " << argv[0] << " <image_path> <blur_size>\n";
         exit(1);
     }
     fs::path input_path = argv[1];
@@ -26,10 +26,10 @@ int main(int argc, char *argv[]) {
     auto [imagePath, blurSize] = parse_args(argc, argv);
     cout << imagePath << '\n';
 
+    // Apply Box blurring to the output image
     render::ImagePPM image(imagePath);
-    // apply filter to image
-    cout << "Applying box blur with size " << blurSize << "...\n";
     image.boxBlur(blurSize);
+    // image.gaussianBlur(blurSize);
 
     // Save the result
     fs::path core_dir = fs::path(__FILE__).parent_path().parent_path();

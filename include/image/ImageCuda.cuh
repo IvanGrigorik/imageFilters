@@ -16,11 +16,6 @@ __global__ void compute_row_prefix_sum(device_view::View input, device_view::Vie
 __global__ void compute_col_prefix_sum(device_view::View input, device_view::View output);
 __global__ void integral_box_blur_kernel(device_view::View integral, device_view::View output, int boxSize);
 
-// // CUDA kernel for filling image with solid color
-// __global__ void fill_image_plain(device_view::View image, pixel::RGB color);
-
-// // CUDA kernel for randomly filling the image
-// __global__ void fill_image_random(device_view::View image, unsigned long long seed);
-
-// // CUDA kernel for filling image with gradient
-// __global__ void fill_image_gradient(device_view::View image);
+// CUDA kernels for Gaussian blur (separable approach)
+__global__ void gaussian_blur_horizontal(device_view::View input, device_view::View output, float *kernel, int kernelRadius);
+__global__ void gaussian_blur_vertical(device_view::View input, device_view::View output, float *kernel, int kernelRadius);

@@ -75,6 +75,7 @@ public:
     ImagePPM(fs::path imagePath);
     void save(fs::path path);
     void boxBlur(int boxSize);
+    void gaussianBlur(int boxSize);
 };
 
 } // namespace render
