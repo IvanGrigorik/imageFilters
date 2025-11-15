@@ -30,7 +30,8 @@ int main(int argc, char *argv[]) {
     render::ImagePPM image(imagePath);
     // image.boxBlur(blurSize);
     // image.gaussianBlur(blurSize);
-    image.gaussianBlurUnoptimized(blurSize);
+    // image.gaussianBlurUnoptimized(blurSize);
+    image.sobelEdgeDetection();
 
     // Save the result
     fs::path core_dir = fs::path(__FILE__).parent_path().parent_path();

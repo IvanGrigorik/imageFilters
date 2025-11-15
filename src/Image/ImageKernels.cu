@@ -233,3 +233,74 @@ __global__ void gaussian_blur_2d_kernel(device_view::View input, device_view::Vi
     output.set_pixel(
         x, y, pixel::RGB(static_cast<int>(sumR + 0.5f), static_cast<int>(sumG + 0.5f), static_cast<int>(sumB + 0.5f)));
 }
+
+// Sobel edge detection kernel
+__global__ void sobel_edge_detection_kernel(device_view::View input, device_view::View output) {
+    int x = blockDim.x * blockIdx.x + threadIdx.x;
+    int y = blockDim.y * blockIdx.y + threadIdx.y;
+
+    int width = input.get_width();
+    int height = input.get_height();
+
+    if (x >= width || y >= height)
+        return;
+
+    // Sobel operators (kernels)
+    // Gx (horizontal edge detection)
+    const int Gx[3][3] = {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+    
+    // Gy (vertical edge detection)
+    const int Gy[3][3] = {
+        {-1, -2, -1},
+        { 0,  0,  0},
+        { 1,  2,  1}
+    };
+
+    float gradientX_R = 0.0f, gradientX_G = 0.0f, gradientX_B = 0.0f;
+    float gradientY_R = 0.0f, gradientY_G = 0.0f, gradientY_B = 0.0f;
+
+    // Apply Sobel operators
+    for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
+            int sampleX = x + dx;
+            int sampleY = y + dy;
+
+            // Clamp to image boundaries
+            if (sampleX < 0) sampleX = 0;
+            if (sampleX >= width) sampleX = width - 1;
+            if (sampleY < 0) sampleY = 0;
+            if (sampleY >= height) sampleY = height - 1;
+
+            pixel::RGB pixel = input.get_pixel(sampleX, sampleY);
+            
+            int gx_weight = Gx[dy + 1][dx + 1];
+            int gy_weight = Gy[dy + 1][dx + 1];
+
+            // Apply weights for X gradient
+            gradientX_R += pixel.getR() * gx_weight;
+            gradientX_G += pixel.getG() * gx_weight;
+            gradientX_B += pixel.getB() * gx_weight;
+
+            // Apply weights for Y gradient
+            gradientY_R += pixel.getR() * gy_weight;
+            gradientY_G += pixel.getG() * gy_weight;
+            gradientY_B += pixel.getB() * gy_weight;
+        }
+    }
+
+    // Calculate gradient magnitude using Euclidean distance
+    float magnitudeR = sqrtf(gradientX_R * gradientX_R + gradientY_R * gradientY_R);
+    float magnitudeG = sqrtf(gradientX_G * gradientX_G + gradientY_G * gradientY_G);
+    float magnitudeB = sqrtf(gradientX_B * gradientX_B + gradientY_B * gradientY_B);
+
+    // Clamp values to 0-255 range
+    int outR = min(255, max(0, static_cast<int>(magnitudeR)));
+    int outG = min(255, max(0, static_cast<int>(magnitudeG)));
+    int outB = min(255, max(0, static_cast<int>(magnitudeB)));
+
+    output.set_pixel(x, y, pixel::RGB(outR, outG, outB));
+}

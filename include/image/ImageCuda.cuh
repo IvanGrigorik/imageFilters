@@ -22,3 +22,6 @@ __global__ void gaussian_blur_vertical(device_view::View input, device_view::Vie
 
 // CUDA kernel for unoptimized 2D Gaussian blur
 __global__ void gaussian_blur_2d_kernel(device_view::View input, device_view::View output, float *kernel, int kernelRadius);
+
+// CUDA kernel for Sobel edge detection
+__global__ void sobel_edge_detection_kernel(device_view::View input, device_view::View output);

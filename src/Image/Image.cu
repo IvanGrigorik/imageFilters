@@ -376,4 +376,38 @@ void ImagePPM::gaussianBlurUnoptimized(int boxSize) {
     copyFromGPU();
 }
 
+void ImagePPM::sobelEdgeDetection() {
+    if (!height || !width) {
+        throw std::runtime_error("Cannot apply edge detection to image with zero dimensions");
+    }
+
+    copyToGPU();
+
+    // Allocate output buffer on GPU
+    pixel::RGB *device_output;
+    size_t data_size = height * width * sizeof(pixel::RGB);
+    CUDA_CHECK(cudaMalloc(&device_output, data_size));
+
+    dim3 block_size(16, 16);
+    dim3 grid_size = get_grid_size(block_size);
+
+    // Create views
+    View input_view = get_device_view();
+    View output_view(device_output, width, height);
+
+    // Apply Sobel edge detection
+    sobel_edge_detection_kernel<<<grid_size, block_size>>>(input_view, output_view);
+    CUDA_CHECK(cudaGetLastError());
+
+    CUDA_CHECK(cudaDeviceSynchronize());
+
+    // Copy result back to device_content
+    CUDA_CHECK(cudaMemcpy(device_content, device_output, data_size, cudaMemcpyDeviceToDevice));
+
+    // Free output buffer
+    CUDA_CHECK(cudaFree(device_output));
+
+    copyFromGPU();
+}
+
 } // namespace render

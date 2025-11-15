@@ -77,6 +77,7 @@ public:
     void boxBlur(int boxSize);
     void gaussianBlur(int boxSize);
     void gaussianBlurUnoptimized(int boxSize);
+    void sobelEdgeDetection();
 };
 
 } // namespace render
