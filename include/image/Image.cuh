@@ -76,6 +76,7 @@ public:
     void save(fs::path path);
     void boxBlur(int boxSize);
     void gaussianBlur(int boxSize);
+    void gaussianBlurUnoptimized(int boxSize);
 };
 
 } // namespace render

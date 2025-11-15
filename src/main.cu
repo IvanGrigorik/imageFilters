@@ -28,8 +28,9 @@ int main(int argc, char *argv[]) {
 
     // Apply Box blurring to the output image
     render::ImagePPM image(imagePath);
-    image.boxBlur(blurSize);
+    // image.boxBlur(blurSize);
     // image.gaussianBlur(blurSize);
+    image.gaussianBlurUnoptimized(blurSize);
 
     // Save the result
     fs::path core_dir = fs::path(__FILE__).parent_path().parent_path();

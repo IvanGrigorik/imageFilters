@@ -185,3 +185,51 @@ __global__ void gaussian_blur_vertical(device_view::View input, device_view::Vie
     output.set_pixel(
         x, y, pixel::RGB(static_cast<int>(sumR + 0.5f), static_cast<int>(sumG + 0.5f), static_cast<int>(sumB + 0.5f)));
 }
+
+// Unoptimized 2D Gaussian blur - applies full 2D kernel (no separability optimization)
+__global__ void gaussian_blur_2d_kernel(device_view::View input, device_view::View output, float *kernel,
+                                        int kernelRadius) {
+    int x = blockDim.x * blockIdx.x + threadIdx.x;
+    int y = blockDim.y * blockIdx.y + threadIdx.y;
+
+    int width = input.get_width();
+    int height = input.get_height();
+
+    if (x >= width || y >= height)
+        return;
+
+    float sumR = 0.0f, sumG = 0.0f, sumB = 0.0f;
+
+    // Apply 2D Gaussian kernel by iterating over the entire kernel window
+    for (int dy = -kernelRadius; dy <= kernelRadius; dy++) {
+        for (int dx = -kernelRadius; dx <= kernelRadius; dx++) {
+            int sampleX = x + dx;
+            int sampleY = y + dy;
+
+            // Clamp to image boundaries
+            if (sampleX < 0)
+                sampleX = 0;
+            if (sampleX >= width)
+                sampleX = width - 1;
+            if (sampleY < 0)
+                sampleY = 0;
+            if (sampleY >= height)
+                sampleY = height - 1;
+
+            pixel::RGB pixel = input.get_pixel(sampleX, sampleY);
+
+            // Calculate 2D Gaussian weight as product of 1D weights
+            // kernel is stored as 1D array, so we compute 2D weight from 1D values
+            float weightX = kernel[dx + kernelRadius];
+            float weightY = kernel[dy + kernelRadius];
+            float weight2D = weightX * weightY;
+
+            sumR += pixel.getR() * weight2D;
+            sumG += pixel.getG() * weight2D;
+            sumB += pixel.getB() * weight2D;
+        }
+    }
+
+    output.set_pixel(
+        x, y, pixel::RGB(static_cast<int>(sumR + 0.5f), static_cast<int>(sumG + 0.5f), static_cast<int>(sumB + 0.5f)));
+}

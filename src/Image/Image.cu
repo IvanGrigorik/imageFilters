@@ -309,4 +309,71 @@ void ImagePPM::gaussianBlur(int boxSize) {
     copyFromGPU();
 }
 
+void ImagePPM::gaussianBlurUnoptimized(int boxSize) {
+    if (!height || !width) {
+        throw std::runtime_error("Cannot blur image with zero dimensions");
+    }
+    if (boxSize < 1) {
+        throw std::runtime_error("Box size must be at least 1");
+    }
+
+    copyToGPU();
+
+    // Calculate sigma based on boxSize (rule of thumb: radius ≈ 3*sigma)
+    float sigma = boxSize / 6.0f;
+    if (sigma < 0.5f) sigma = 0.5f;
+    
+    // Calculate kernel radius (typically 3*sigma gives good approximation)
+    int kernelRadius = static_cast<int>(std::ceil(3.0f * sigma));
+    int kernelSize = 2 * kernelRadius + 1;
+    
+    // Generate 1D Gaussian kernel on CPU
+    std::vector<float> host_kernel(kernelSize);
+    float sum = 0.0f;
+    
+    for (int i = 0; i < kernelSize; i++) {
+        int x = i - kernelRadius;
+        float value = std::exp(-(x * x) / (2.0f * sigma * sigma));
+        host_kernel[i] = value;
+        sum += value;
+    }
+    
+    // Normalize kernel
+    for (int i = 0; i < kernelSize; i++) {
+        host_kernel[i] /= sum;
+    }
+    
+    // Copy kernel to GPU
+    float *device_kernel;
+    CUDA_CHECK(cudaMalloc(&device_kernel, kernelSize * sizeof(float)));
+    CUDA_CHECK(cudaMemcpy(device_kernel, host_kernel.data(), kernelSize * sizeof(float), cudaMemcpyHostToDevice));
+    
+    // Allocate output buffer on GPU
+    pixel::RGB *device_output;
+    size_t data_size = height * width * sizeof(pixel::RGB);
+    CUDA_CHECK(cudaMalloc(&device_output, data_size));
+    
+    dim3 block_size(16, 16);
+    dim3 grid_size = get_grid_size(block_size);
+    
+    // Create views
+    View input_view = get_device_view();
+    View output_view(device_output, width, height);
+    
+    // Apply 2D Gaussian blur directly (no separability)
+    gaussian_blur_2d_kernel<<<grid_size, block_size>>>(input_view, output_view, device_kernel, kernelRadius);
+    CUDA_CHECK(cudaGetLastError());
+    
+    CUDA_CHECK(cudaDeviceSynchronize());
+    
+    // Copy result back to device_content
+    CUDA_CHECK(cudaMemcpy(device_content, device_output, data_size, cudaMemcpyDeviceToDevice));
+    
+    // Free temporary buffers
+    CUDA_CHECK(cudaFree(device_kernel));
+    CUDA_CHECK(cudaFree(device_output));
+    
+    copyFromGPU();
+}
+
 } // namespace render

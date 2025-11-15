@@ -19,3 +19,6 @@ __global__ void integral_box_blur_kernel(device_view::View integral, device_view
 // CUDA kernels for Gaussian blur (separable approach)
 __global__ void gaussian_blur_horizontal(device_view::View input, device_view::View output, float *kernel, int kernelRadius);
 __global__ void gaussian_blur_vertical(device_view::View input, device_view::View output, float *kernel, int kernelRadius);
+
+// CUDA kernel for unoptimized 2D Gaussian blur
+__global__ void gaussian_blur_2d_kernel(device_view::View input, device_view::View output, float *kernel, int kernelRadius);
