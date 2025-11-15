@@ -8,8 +8,8 @@ namespace fs = std::filesystem;
 using namespace std;
 
 // parses main function arguments
-fs::path parse_args(int argc, char *argv[]) {
-    if (argc < 2) {
+pair<fs::path, int> parse_args(int argc, char *argv[]) {
+    if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " <image_path>\n";
         exit(1);
     }
@@ -18,20 +18,26 @@ fs::path parse_args(int argc, char *argv[]) {
     if (!fs::exists(abs_path)) {
         std::cerr << "Error: file not found\n";
     }
-    return abs_path;
+    int boxSize = stoi(argv[2]);
+    return {abs_path, boxSize};
 }
 
 int main(int argc, char *argv[]) {
-    fs::path imagePath = parse_args(argc, argv);
+    auto [imagePath, blurSize] = parse_args(argc, argv);
     cout << imagePath << '\n';
 
     render::ImagePPM image(imagePath);
     // apply filter to image
-    
+    cout << "Applying box blur with size " << blurSize << "...\n";
+    image.boxBlur(blurSize);
 
-    // // TODO: remove later. temporary solution to debug faster
+    // Save the result
     fs::path core_dir = fs::path(__FILE__).parent_path().parent_path();
     fs::path out = core_dir / "out/image.ppm";
+    image.save(out);
+    cout << "Blurred image saved to " << out << '\n';
+    
+    // Convert to PNG for easier viewing
     fs::path converted = core_dir / "out/converted.png";
     std::string cmd = "convert " + out.string() + " " + converted.string();
     system(cmd.c_str());

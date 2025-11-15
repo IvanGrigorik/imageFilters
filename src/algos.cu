@@ -1,8 +1,8 @@
 // Local includes
 #include "Pixel.cuh"
-#include "View.cuh"
 #include "algos.cuh"
 #include "image/Image.cuh"
+#include "image/View.cuh"
 
 // CUDA includes
 #include <cuda_runtime.h>
@@ -26,9 +26,6 @@ __global__ void row_prefix_sum(device_view::View *image, int N) {
 
     // Up-sweep
     for (int d = 1; d < N; d *= 2) {
-        __syncthreads();
-        int ai = (row + 1) * 2 * d - 1;
-        int bi = (row + 1) * 2 * d - 1 + d;
         __syncthreads();
         int ai = (row + 1) * 2 * d - 1;
         int bi = (row + 1) * 2 * d - 1 + d;

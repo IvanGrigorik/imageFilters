@@ -40,10 +40,26 @@ public:
         return *this;
     }
 
+    __host__ __device__ RGB operator-(const RGB &c) {
+        R -= c.R;
+        G -= c.G;
+        B -= c.B;
+        return *this;
+    }
+
     __host__ __device__ RGB operator*(double t) {
         R *= t;
         G *= t;
         B *= t;
+        return *this;
+    }
+
+    __host__ __device__ RGB operator/(double t) {
+        if (t != 0) {
+            R /= t;
+            G /= t;
+            B /= t;
+        }
         return *this;
     }
 
@@ -56,12 +72,19 @@ public:
 
     __host__ __device__ RGB get() const { return *this; }
 
-    // getters
+    // getters (clamped to 0-255 range)
     __host__ __device__ int getR() const { return R % 256; }
 
     __host__ __device__ int getG() const { return G % 256; }
 
     __host__ __device__ int getB() const { return B % 256; }
+    
+    // Raw getters (no clamping - for integral image calculations)
+    __host__ __device__ int getRRaw() const { return R; }
+
+    __host__ __device__ int getGRaw() const { return G; }
+
+    __host__ __device__ int getBRaw() const { return B; }
 };
 
 __host__ __device__ inline RGB operator*(double t, RGB p) {

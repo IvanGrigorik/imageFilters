@@ -29,8 +29,17 @@ public:
 
     __device__ pixel::RGB get_pixel(int x, int y) const { return content[y * width + x]; }
 
-    __device__ int get_height() { return height; }
+    // Safe pixel access with boundary checking
+    __device__ pixel::RGB get_pixel_safe(int x, int y) const {
+        if (x < 0) x = 0;
+        if (x >= width) x = width - 1;
+        if (y < 0) y = 0;
+        if (y >= height) y = height - 1;
+        return content[y * width + x];
+    }
 
-    __device__ int get_width() { return width; }
+    __device__ int get_height() const { return height; }
+
+    __device__ int get_width() const { return width; }
 };
 } // namespace device_view

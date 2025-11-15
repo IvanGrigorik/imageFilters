@@ -125,7 +125,7 @@ void ImageBase::freeGPUMemory() {
 /*** ImagePPM class functions ***/
 ImagePPM::ImagePPM(fs::path imagePath) {
     // load PPM image structure
-    std::ifstream imageFile(imagePath, std::ios::binary);
+    std::ifstream imageFile(imagePath);
 
     if (!imageFile.is_open()) {
         std::cerr << "Failed to open file: " << imagePath << "\n";
@@ -133,8 +133,8 @@ ImagePPM::ImagePPM(fs::path imagePath) {
     }
     std::string magic;
     imageFile >> magic;
-    if (magic != "P6") {
-        std::cerr << "Unsupported PPM format: " << magic << "\n";
+    if (magic != "P3") {
+        std::cerr << "Unsupported PPM format: " << magic << " (expected P3)\n";
         return;
     }
 
@@ -148,8 +148,7 @@ ImagePPM::ImagePPM(fs::path imagePath) {
 
     int max_px;
     imageFile >> width >> height >> max_px;
-    // skip the newline after header
-    imageFile.ignore(1);
+
     if (width <= 0 || height <= 0) {
         std::cerr << "Invalid image dimensions\n";
         return;
@@ -166,26 +165,69 @@ ImagePPM::ImagePPM(fs::path imagePath) {
                           cudaMemcpyHostToDevice));
 }
 
+/* Naive box blur. Each kernel computes its value based on window */
 void ImagePPM::boxBlur(int boxSize) {
     if (!height || !width) {
-        throw std::runtime_error("Cannot fill image with zero dimensions");
+        throw std::runtime_error("Cannot blur image with zero dimensions");
+    }
+    if (boxSize < 1) {
+        throw std::runtime_error("Box size must be at least 1");
     }
 
     copyToGPU();
+
+    // Allocate output buffer on GPU
+    pixel::RGB *device_output;
+    size_t data_size = height * width * sizeof(pixel::RGB);
+    CUDA_CHECK(cudaMalloc((pixel::RGB **)&device_output, data_size));
+
     dim3 block_size(16, 16);
     dim3 grid_size = get_grid_size(block_size);
 
-    float weight = 1.0 / float(boxSize * boxSize);
-    // Device integral image for fast box sum
-    float *d_integral;
+    // Create views for input and output
+    View input_view = get_device_view();
+    View output_view(device_output, width, height);
 
-    
+    // For small box sizes, use naive approach
+    if (boxSize < 10) {
+        box_blur_kernel<<<grid_size, block_size>>>(input_view, output_view, boxSize);
+    } else {
+        // For large box sizes, use integral image approach
+        pixel::RGB *device_integral;
+        pixel::RGB *device_temp;
+        CUDA_CHECK(cudaMalloc((pixel::RGB **)&device_integral, data_size));
+        CUDA_CHECK(cudaMalloc((pixel::RGB **)&device_temp, data_size));
+        
+        View integral_view(device_integral, width, height);
+        View temp_view(device_temp, width, height);
+        
+        // Step 1: Compute row-wise prefix sum
+        dim3 block_1d(256);
+        dim3 grid_rows((height + block_1d.x - 1) / block_1d.x);
+        compute_row_prefix_sum<<<grid_rows, block_1d>>>(input_view, temp_view);
+        CUDA_CHECK(cudaGetLastError());
+        
+        // Step 2: Compute column-wise prefix sum on row-summed data
+        dim3 grid_cols((width + block_1d.x - 1) / block_1d.x);
+        compute_col_prefix_sum<<<grid_cols, block_1d>>>(temp_view, integral_view);
+        CUDA_CHECK(cudaGetLastError());
+        
+        // Step 3: Use integral image to compute box blur
+        integral_box_blur_kernel<<<grid_size, block_size>>>(integral_view, output_view, boxSize);
+        CUDA_CHECK(cudaGetLastError());
+        
+        // Free temporary buffers
+        CUDA_CHECK(cudaFree(device_integral));
+        CUDA_CHECK(cudaFree(device_temp));
+    }
 
+    CUDA_CHECK(cudaDeviceSynchronize());
 
-    // Hi Blur!
-    box_blur_kernel<<<grid_size, block_size>>>(this->get_device_view());
+    // Copy result back to device_content
+    CUDA_CHECK(cudaMemcpy(device_content, device_output, data_size, cudaMemcpyDeviceToDevice));
 
-    cudaDeviceSynchronize();
+    // Free temporary output buffer
+    CUDA_CHECK(cudaFree(device_output));
 
     copyFromGPU();
 }
