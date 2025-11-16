@@ -1,0 +1,12 @@
+<map id="device_view::View::get_height" name="device_view::View::get_height">
+<area shape="rect" id="node1" title="Get image height." alt="" coords="243,201,392,242"/>
+<area shape="rect" id="node2" href="$ImageKernels_8cu.html#a8bb405208a0489878ec44fc682f4c0c3" title=" " alt="" coords="37,5,163,32"/>
+<area shape="rect" id="node3" href="$algos_8cu.html#a9e0e7707814678c9477665377596c3ed" title="CUDA kernel for computing column&#45;wise prefix sum (integral image)" alt="" coords="40,56,160,83"/>
+<area shape="rect" id="node4" href="$ImageKernels_8cu.html#a37b3b3d085ecabae40b1f26c8c73f52d" title=" " alt="" coords="8,107,192,133"/>
+<area shape="rect" id="node5" href="$ImageKernels_8cu.html#a4ac0a0c397995a307cd29b983f6107a3" title=" " alt="" coords="5,157,195,184"/>
+<area shape="rect" id="node6" href="$ImageKernels_8cu.html#a90f97e225605c895923c535cab9706fe" title=" " alt="" coords="9,208,191,235"/>
+<area shape="rect" id="node7" href="$ImageKernels_8cu.html#abc394a6b09c783631e102d153a63a8c9" title=" " alt="" coords="8,259,192,285"/>
+<area shape="rect" id="node8" href="$ImageKernels_8cu.html#a5b49e6a67c25313ba457e1c52be5bb2d" title=" " alt="" coords="16,309,184,336"/>
+<area shape="rect" id="node9" href="$ImageKernels_8cu.html#ae9a486a936b4960ff59ca254b4b677e0" title=" " alt="" coords="9,360,191,387"/>
+<area shape="rect" id="node10" href="$ImageKernels_8cu.html#ad4f040c2d2e39d29e451122edaf3e668" title=" " alt="" coords="18,411,182,453"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="pixel::RGB::getB" name="pixel::RGB::getB">
+<area shape="rect" id="node1" title="Get blue channel value (clamped to 0&#45;255 range)" alt="" coords="243,31,369,57"/>
+<area shape="rect" id="node2" href="$ImageKernels_8cu.html#a4ac0a0c397995a307cd29b983f6107a3" title=" " alt="" coords="5,5,195,32"/>
+<area shape="rect" id="node3" href="$namespacepixel.html#a75e337102b8a047671e6e5720128debd" title="Component&#45;wise multiplication of two RGB colors." alt="" coords="39,56,161,83"/>
+</map>

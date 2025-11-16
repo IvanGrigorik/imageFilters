@@ -1,0 +1,12 @@
+<map id="device_view::View::get_width" name="device_view::View::get_width">
+<area shape="rect" id="node1" title="Get image width." alt="" coords="243,201,392,242"/>
+<area shape="rect" id="node2" href="$ImageKernels_8cu.html#a8bb405208a0489878ec44fc682f4c0c3" title=" " alt="" coords="37,5,163,32"/>
+<area shape="rect" id="node3" href="$ImageKernels_8cu.html#a37b3b3d085ecabae40b1f26c8c73f52d" title=" " alt="" coords="8,56,192,83"/>
+<area shape="rect" id="node4" href="$ImageKernels_8cu.html#a4ac0a0c397995a307cd29b983f6107a3" title=" " alt="" coords="5,107,195,133"/>
+<area shape="rect" id="node5" href="$ImageKernels_8cu.html#a90f97e225605c895923c535cab9706fe" title=" " alt="" coords="9,157,191,184"/>
+<area shape="rect" id="node6" href="$ImageKernels_8cu.html#abc394a6b09c783631e102d153a63a8c9" title=" " alt="" coords="8,208,192,235"/>
+<area shape="rect" id="node7" href="$ImageKernels_8cu.html#a5b49e6a67c25313ba457e1c52be5bb2d" title=" " alt="" coords="16,259,184,285"/>
+<area shape="rect" id="node8" href="$ImageKernels_8cu.html#ae9a486a936b4960ff59ca254b4b677e0" title=" " alt="" coords="9,309,191,336"/>
+<area shape="rect" id="node9" href="$algos_8cu.html#afe1483709579e75791ff93a6b7f5ca40" title="CUDA kernel for computing row&#45;wise prefix sum (integral image)" alt="" coords="37,360,163,387"/>
+<area shape="rect" id="node10" href="$ImageKernels_8cu.html#ad4f040c2d2e39d29e451122edaf3e668" title=" " alt="" coords="18,411,182,453"/>
+</map>

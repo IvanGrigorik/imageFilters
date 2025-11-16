@@ -1,0 +1,13 @@
+<map id="src/main.cu" name="src/main.cu">
+<area shape="rect" id="node1" title=" " alt="" coords="127,5,224,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,71,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="95,80,160,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="185,80,265,107"/>
+<area shape="rect" id="node5" href="$Image_8cuh.html" title="Image processing classes for CUDA&#45;based operations." alt="" coords="289,80,424,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="109,155,199,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="223,155,301,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="325,155,388,181"/>
+<area shape="rect" id="node9" href="$Pixel_8cuh.html" title="Wrapper class for pixels of different color formats." alt="" coords="425,229,505,256"/>
+<area shape="rect" id="node11" href="$View_8cuh.html" title="Device&#45;side view interface for image processing kernels." alt="" coords="463,155,543,181"/>
+<area shape="rect" id="node10" title=" " alt="" coords="431,304,498,331"/>
+</map>

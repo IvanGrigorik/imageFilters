@@ -1,0 +1,10 @@
+<map id="integral_box_blur_kernel" name="integral_box_blur_kernel">
+<area shape="rect" id="node1" title=" " alt="" coords="5,202,188,229"/>
+<area shape="rect" id="node2" href="$classdevice__view_1_1View.html#a9c7e4ca344806f60324e417bbf516250" title="Get image height." alt="" coords="239,5,389,47"/>
+<area shape="rect" id="node3" href="$classdevice__view_1_1View.html#acc975b14c705590b4363be6aaeb91d74" title="Get pixel color at specified coordinates (no bounds checking)" alt="" coords="239,71,389,112"/>
+<area shape="rect" id="node4" href="$classdevice__view_1_1View.html#a499e9c9d21980d9a28d5327a1f33b913" title="Get image width." alt="" coords="239,136,389,177"/>
+<area shape="rect" id="node5" href="$classpixel_1_1RGB.html#ae7ba1d9dc07647ec352fdbf74ab7a8de" title="Get raw blue channel value (no clamping &#45; for integral image calculations)" alt="" coords="237,202,391,229"/>
+<area shape="rect" id="node6" href="$classpixel_1_1RGB.html#a45187bdda20cd46cadd942d8af85b504" title="Get raw green channel value (no clamping &#45; for integral image calculations)" alt="" coords="236,253,392,279"/>
+<area shape="rect" id="node7" href="$classpixel_1_1RGB.html#a1015e651c304e9494b3d3331b67a3a2e" title="Get raw red channel value (no clamping &#45; for integral image calculations)" alt="" coords="237,303,391,330"/>
+<area shape="rect" id="node8" href="$classdevice__view_1_1View.html#ad71c34006984accf7ceb986a43983b5f" title="Set pixel color at specified coordinates." alt="" coords="239,355,389,396"/>
+</map>

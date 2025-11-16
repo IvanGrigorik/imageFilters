@@ -1,0 +1,6 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,60,83"/>
+<area shape="rect" id="node2" href="$main_8cu.html#a500cbf3e94a6be9717247706cc74ad36" title=" " alt="" coords="169,5,263,32"/>
+<area shape="rect" id="node3" href="$classrender_1_1ImagePPM.html#a71335da7d9b1f39c02aa0076452d7257" title="Save image to PPM file." alt="" coords="126,56,306,83"/>
+<area shape="rect" id="node4" href="$classrender_1_1ImagePPM.html#ae983120f495a5ecec39f9d3bcf953669" title="Apply Sobel edge detection filter." alt="" coords="108,107,324,149"/>
+</map>

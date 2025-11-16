@@ -1,0 +1,5 @@
+<map id="pixel::RGB::getBRaw" name="pixel::RGB::getBRaw">
+<area shape="rect" id="node1" title="Get raw blue channel value (no clamping &#45; for integral image calculations)" alt="" coords="237,31,392,57"/>
+<area shape="rect" id="node2" href="$ImageKernels_8cu.html#a37b3b3d085ecabae40b1f26c8c73f52d" title=" " alt="" coords="5,5,189,32"/>
+<area shape="rect" id="node3" href="$ImageKernels_8cu.html#ae9a486a936b4960ff59ca254b4b677e0" title=" " alt="" coords="6,56,189,83"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="src/algos.cu" name="src/algos.cu">
+<area shape="rect" id="node1" title=" " alt="" coords="113,5,211,32"/>
+<area shape="rect" id="node2" href="$Pixel_8cuh.html" title="Wrapper class for pixels of different color formats." alt="" coords="54,229,134,256"/>
+<area shape="rect" id="node4" href="$algos_8cuh.html" title="CUDA kernel declarations for image processing algorithms." alt="" coords="40,80,124,107"/>
+<area shape="rect" id="node5" href="$View_8cuh.html" title="Device&#45;side view interface for image processing kernels." alt="" coords="31,155,157,181"/>
+<area shape="rect" id="node6" href="$Image_8cuh.html" title="Image processing classes for CUDA&#45;based operations." alt="" coords="200,80,335,107"/>
+<area shape="rect" id="node10" title=" " alt="" coords="359,80,482,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="61,304,127,331"/>
+<area shape="rect" id="node7" title=" " alt="" coords="231,155,322,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="346,155,423,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="448,155,511,181"/>
+</map>

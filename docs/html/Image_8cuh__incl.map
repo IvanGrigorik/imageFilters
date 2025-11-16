@@ -1,0 +1,9 @@
+<map id="include/image/Image.cuh" name="include/image/Image.cuh">
+<area shape="rect" id="node1" title="Image processing classes for CUDA&#45;based operations." alt="" coords="160,5,347,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,96,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="120,80,197,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="222,80,285,107"/>
+<area shape="rect" id="node5" href="$Pixel_8cuh.html" title="Wrapper class for pixels of different color formats." alt="" coords="321,155,401,181"/>
+<area shape="rect" id="node7" href="$View_8cuh.html" title="Device&#45;side view interface for image processing kernels." alt="" coords="360,80,440,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="328,229,395,256"/>
+</map>

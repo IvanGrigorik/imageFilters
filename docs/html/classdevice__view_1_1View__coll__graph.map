@@ -1,0 +1,5 @@
+<map id="device_view::View" name="device_view::View">
+<area shape="rect" id="node1" title="Device&#45;side image view for CUDA kernels." alt="" coords="5,461,148,612"/>
+<area shape="rect" id="node2" href="$classpixel_1_1RGB.html" title="Classic RGB pixel format supporting both host and device operations." alt="" coords="107,175,222,399"/>
+<area shape="rect" id="node3" title=" " alt="" coords="35,5,73,83"/>
+</map>

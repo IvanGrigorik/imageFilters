@@ -1,0 +1,12 @@
+<map id="include/Pixel.cuh" name="include/Pixel.cuh">
+<area shape="rect" id="node1" title="Wrapper class for pixels of different color formats." alt="" coords="319,5,449,32"/>
+<area shape="rect" id="node2" href="$algos_8cu.html" title=" " alt="" coords="5,229,104,256"/>
+<area shape="rect" id="node3" href="$ImageKernels_8cu.html" title=" " alt="" coords="543,229,742,256"/>
+<area shape="rect" id="node4" href="$Pixel_8cu.html" title=" " alt="" coords="603,80,698,107"/>
+<area shape="rect" id="node5" href="$Image_8cuh.html" title="Image processing classes for CUDA&#45;based operations." alt="" coords="291,155,477,181"/>
+<area shape="rect" id="node9" href="$View_8cuh.html" title="Device&#45;side view interface for image processing kernels." alt="" coords="168,80,344,107"/>
+<area shape="rect" id="node6" href="$Image_8cu.html" title=" " alt="" coords="235,304,386,331"/>
+<area shape="rect" id="node7" href="$main_8cu.html" title=" " alt="" coords="422,229,519,256"/>
+<area shape="rect" id="node8" href="$ImageCuda_8cuh.html" title=" " alt="" coords="128,229,347,256"/>
+<area shape="rect" id="node10" href="$algos_8cuh.html" title="CUDA kernel declarations for image processing algorithms." alt="" coords="30,155,165,181"/>
+</map>

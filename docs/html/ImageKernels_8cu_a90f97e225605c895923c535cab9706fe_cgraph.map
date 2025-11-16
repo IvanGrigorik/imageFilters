@@ -1,0 +1,7 @@
+<map id="gaussian_blur_2d_kernel" name="gaussian_blur_2d_kernel">
+<area shape="rect" id="node1" title=" " alt="" coords="5,111,188,138"/>
+<area shape="rect" id="node2" href="$classdevice__view_1_1View.html#a9c7e4ca344806f60324e417bbf516250" title="Get image height." alt="" coords="236,5,385,47"/>
+<area shape="rect" id="node3" href="$classdevice__view_1_1View.html#acc975b14c705590b4363be6aaeb91d74" title="Get pixel color at specified coordinates (no bounds checking)" alt="" coords="236,71,385,112"/>
+<area shape="rect" id="node4" href="$classdevice__view_1_1View.html#a499e9c9d21980d9a28d5327a1f33b913" title="Get image width." alt="" coords="236,136,385,177"/>
+<area shape="rect" id="node5" href="$classdevice__view_1_1View.html#ad71c34006984accf7ceb986a43983b5f" title="Set pixel color at specified coordinates." alt="" coords="236,201,385,243"/>
+</map>

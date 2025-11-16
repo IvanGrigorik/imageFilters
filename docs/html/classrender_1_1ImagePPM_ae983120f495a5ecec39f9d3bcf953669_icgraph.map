@@ -1,0 +1,4 @@
+<map id="render::ImagePPM::sobelEdgeDetection" name="render::ImagePPM::sobelEdgeDetection">
+<area shape="rect" id="node1" title="Apply Sobel edge detection filter." alt="" coords="108,5,324,47"/>
+<area shape="rect" id="node2" href="$main_8cu.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,13,60,39"/>
+</map>

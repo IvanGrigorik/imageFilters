@@ -1,0 +1,10 @@
+<map id="include/image/View.cuh" name="include/image/View.cuh">
+<area shape="rect" id="node1" title="Device&#45;side view interface for image processing kernels." alt="" coords="153,5,329,32"/>
+<area shape="rect" id="node2" href="$algos_8cu.html" title=" " alt="" coords="18,155,117,181"/>
+<area shape="rect" id="node3" href="$ImageKernels_8cu.html" title=" " alt="" coords="141,155,340,181"/>
+<area shape="rect" id="node4" href="$algos_8cuh.html" title="CUDA kernel declarations for image processing algorithms." alt="" coords="5,80,140,107"/>
+<area shape="rect" id="node5" href="$Image_8cuh.html" title="Image processing classes for CUDA&#45;based operations." alt="" coords="298,80,485,107"/>
+<area shape="rect" id="node8" href="$ImageCuda_8cuh.html" title=" " alt="" coords="537,155,755,181"/>
+<area shape="rect" id="node6" href="$Image_8cu.html" title=" " alt="" coords="497,229,648,256"/>
+<area shape="rect" id="node7" href="$main_8cu.html" title=" " alt="" coords="364,155,461,181"/>
+</map>

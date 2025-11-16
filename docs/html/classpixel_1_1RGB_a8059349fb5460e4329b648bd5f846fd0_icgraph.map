@@ -1,0 +1,4 @@
+<map id="pixel::RGB::getR" name="pixel::RGB::getR">
+<area shape="rect" id="node1" title="Get red channel value (clamped to 0&#45;255 range)" alt="" coords="243,5,369,32"/>
+<area shape="rect" id="node2" href="$ImageKernels_8cu.html#a4ac0a0c397995a307cd29b983f6107a3" title=" " alt="" coords="5,5,195,32"/>
+</map>

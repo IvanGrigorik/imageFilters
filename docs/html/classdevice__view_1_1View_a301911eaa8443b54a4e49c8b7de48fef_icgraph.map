@@ -1,0 +1,4 @@
+<map id="device_view::View::get_pixel_safe" name="device_view::View::get_pixel_safe">
+<area shape="rect" id="node1" title="Safe pixel access with boundary checking and clamping." alt="" coords="179,5,328,47"/>
+<area shape="rect" id="node2" href="$ImageKernels_8cu.html#a8bb405208a0489878ec44fc682f4c0c3" title=" " alt="" coords="5,13,131,39"/>
+</map>

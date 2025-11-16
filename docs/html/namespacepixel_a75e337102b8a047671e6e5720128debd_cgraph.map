@@ -1,0 +1,5 @@
+<map id="pixel::operator*" name="pixel::operator*">
+<area shape="rect" id="node1" title="Component&#45;wise multiplication of two RGB colors." alt="" coords="5,31,128,57"/>
+<area shape="rect" id="node2" href="$classpixel_1_1RGB.html#a29691da5e0b881df61c93033ffc02eaf" title="Get blue channel value (clamped to 0&#45;255 range)" alt="" coords="177,5,303,32"/>
+<area shape="rect" id="node3" href="$classpixel_1_1RGB.html#aaa9f6b260dfd7f785b6ad8998e4deea2" title="Get green channel value (clamped to 0&#45;255 range)" alt="" coords="176,56,304,83"/>
+</map>
