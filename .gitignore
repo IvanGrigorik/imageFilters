@@ -2,3 +2,5 @@ build/
 debug/
 out/
 CMakeFiles/
+latex/
+html/
